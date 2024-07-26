@@ -4,6 +4,7 @@ import com.epam.code.mie.library.dtos.BookDto;
 import com.epam.code.mie.library.mappers.BooksMapper;
 import com.epam.code.mie.library.services.BooksService;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,5 +19,10 @@ public class BooksFacade {
   @Transactional(readOnly = true)
   public List<BookDto> getAllBooks() {
     return booksMapper.toDtoList(booksService.getAllBooks());
+  }
+
+  @Transactional(readOnly = true)
+  public Optional<BookDto> getBookByName(String name) {
+    return booksService.getBookByName(name).map(booksMapper::toDto);
   }
 }
