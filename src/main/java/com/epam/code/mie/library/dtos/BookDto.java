@@ -1,5 +1,12 @@
 package com.epam.code.mie.library.dtos;
 
-public record BookDto(String name, AuthorDto author, String genre, String description) {
+import io.swagger.v3.oas.annotations.media.Schema;
+
+public record BookDto(
+    @Schema(description = "Name of the book") String name, 
+    @Schema(description = "Author of the book") AuthorDto author, 
+    @Schema(description = "Genre of the book") String genre, 
+    @Schema(description = "Description of the book") String description
+) {
 
 }
