@@ -22,6 +22,7 @@ public class BooksService {
     }
 
     public Optional<BookDto> getBookByName(String name) {
-        return booksRepository.findByName(name).map(booksMapper::toBookDto);
+        return booksRepository.findByName(name)
+                .map(booksMapper::toBookDto);
     }
 }
