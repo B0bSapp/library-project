@@ -2,8 +2,8 @@ package com.epam.code.mie.library.controllers;
 
 import com.epam.code.mie.library.dtos.BookDto;
 import com.epam.code.mie.library.facades.BooksFacade;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,18 +13,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@Api(tags = "Library Controller", description = "Controller for library endpoints")
+@Tag(name = "Library Management System", description = "Operations related to library management")
 public class LibraryController {
 
   private final BooksFacade booksFacade;
 
+  @Operation(summary = "Get list of all books")
   @GetMapping("/books")
-  @ApiOperation(value = "Get all books", notes = "Fetches all books available in the library")
   public List<BookDto> getAllBooks(){
     return booksFacade.getAllBooks();
   }
 
-  @ApiOperation(value = "Get a book by name", notes = "Fetches a book by its name", response = BookDto.class)
+  @Operation(summary = "Get a book by name")
   @GetMapping("/books/name")
   public ResponseEntity<BookDto> getBookByName(@RequestParam String name) {
     return booksFacade.getBookByName(name)
