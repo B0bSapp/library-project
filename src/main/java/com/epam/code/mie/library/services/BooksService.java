@@ -27,11 +27,15 @@ public class BooksService {
     }
 
     public boolean addBook(BookDto bookDto) {
-        if (authorsRepository.existsById(bookDto.getAuthorId())) {
+        if (isAuthorExists(bookDto.getAuthorId())) {
             Book book = BooksMapper.toEntity(bookDto);
             booksRepository.save(book);
             return true;
         }
         return false;
+    }
+
+    private boolean isAuthorExists(Long authorId) {
+        return authorsRepository.existsById(authorId);
     }
 }
