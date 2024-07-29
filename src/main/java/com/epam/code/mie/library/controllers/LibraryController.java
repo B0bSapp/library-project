@@ -4,12 +4,11 @@ import com.epam.code.mie.library.dtos.BookDto;
 import com.epam.code.mie.library.facades.BooksFacade;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,5 +29,12 @@ public class LibraryController {
     return booksFacade.getBookByName(name)
         .map(ResponseEntity::ok)
         .orElse(ResponseEntity.notFound().build());
+  }
+
+  @Operation(summary = "Add a new book")
+  @PostMapping("/books")
+  public ResponseEntity<BookDto> addBook(@RequestBody BookDto bookDto) {
+    BookDto createdBook = booksFacade.addBook(bookDto);
+    return ResponseEntity.ok(createdBook);
   }
 }
