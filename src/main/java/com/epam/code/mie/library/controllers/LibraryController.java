@@ -2,6 +2,7 @@ package com.epam.code.mie.library.controllers;
 
 import com.epam.code.mie.library.dtos.BookDto;
 import com.epam.code.mie.library.facades.BooksFacade;
+import com.epam.code.mie.library.services.AuthorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.List;
 public class LibraryController {
 
   private final BooksFacade booksFacade;
+  private final AuthorService authorService;
 
   @Operation(summary = "Get list of all books")
   @GetMapping("/books")
@@ -33,7 +35,17 @@ public class LibraryController {
 
   @Operation(summary = "Add a new book")
   @PostMapping("/books")
-  public ResponseEntity<BookDto> addBook(@RequestBody BookDto bookDto) {
+  public ResponseEntity<?> addBook(@RequestBody BookDto bookDto) {
+    boolean authorExists = authorService.authorExists(
+        bookDto.getAuthor().getName(),
+        bookDto.getAuthor().getLastName(),
+        bookDto.getAuthor().getSecondName()
+    );
+
+    if (!authorExists) {
+        return ResponseEntity.badRequest().body("Author does not exist");
+    }
+
     BookDto createdBook = booksFacade.addBook(bookDto);
     return ResponseEntity.ok(createdBook);
   }
