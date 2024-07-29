@@ -31,4 +31,9 @@ public class BooksFacade {
     public BookDto addBook(BookDto bookDto) {
         return booksMapper.toDto(booksService.addBook(booksMapper.toEntity(bookDto)));
     }
+    
+    @Transactional
+    public BookDto addNewBook(BookDto bookDto) {
+        return booksMapper.toDto(booksService.addBook(booksMapper.toEntity(bookDto)));
+    }
 }
