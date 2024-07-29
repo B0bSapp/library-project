@@ -15,14 +15,12 @@ import java.util.Optional;
 public class BooksService {
 
     private final BooksRepository booksRepository;
-    private final BooksMapper booksMapper;
 
-    public List<BookDto> getAllBooks() {
-        return booksMapper.toBookDtoList(booksRepository.findAll());
+    public List<Book> getAllBooks() {
+        return booksRepository.findAll();
     }
 
-    public Optional<BookDto> getBookByName(String name) {
-        return booksRepository.findByName(name)
-                .map(booksMapper::toBookDto);
+    public Optional<Book> getBookByName(String name) {
+        return booksRepository.findByName(name);
     }
 }

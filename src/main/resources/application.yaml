@@ -1,7 +1,7 @@
 spring.application.name: library
 
 # JPA configuration to avoid database recreation
-spring.jpa.hibernate.ddl-auto=none
+spring.jpa.hibernate.ddl-auto: none
 
 # Flyway configuration
-spring.flyway.enabled=true
+spring.flyway.enabled: true
