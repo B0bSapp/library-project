@@ -31,4 +31,11 @@ public class LibraryController {
         .map(ResponseEntity::ok)
         .orElse(ResponseEntity.notFound().build());
   }
+
+  @Operation(summary = "Add a new book")
+  @PostMapping("/books")
+  public ResponseEntity<BookDto> addBook(@Valid @RequestBody BookDto bookDto) {
+    BookDto createdBook = booksFacade.addBook(bookDto);
+    return ResponseEntity.ok(createdBook);
+  }
 }
