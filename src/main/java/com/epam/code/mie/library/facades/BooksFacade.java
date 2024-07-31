@@ -26,9 +26,4 @@ public class BooksFacade {
     public Optional<BookDto> getBookByName(String name) {
         return booksService.getBookByName(name).map(booksMapper::toDto);
     }
-
-    @Transactional
-    public BookDto addBook(BookDto bookDto) {
-        return booksMapper.toDto(booksService.addBook(booksMapper.toEntity(bookDto)));
-    }
 }
