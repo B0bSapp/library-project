@@ -17,6 +17,7 @@ public class BooksService {
 
     private final BooksRepository booksRepository;
     private final AuthorsRepository authorsRepository;
+    private final BooksMapper booksMapper;
 
     public List<Book> getAllBooks() {
         return booksRepository.findAll();
@@ -24,5 +25,10 @@ public class BooksService {
 
     public Optional<Book> getBookByName(String name) {
         return booksRepository.findByName(name);
+    }
+
+    public Book saveBook(BookDto bookDto) {
+        Book book = booksMapper.toEntity(bookDto);
+        return booksRepository.save(book);
     }
 }

@@ -2,6 +2,7 @@ package com.epam.code.mie.library.controllers;
 
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -14,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.http.MediaType;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = LibraryApplication.class, webEnvironment = RANDOM_PORT)
@@ -40,5 +42,19 @@ public class LibraryControllerIntegrationTest {
         mockMvc.perform(get("/books/name")
                 .param("name", "Nonexistent Book"))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void testCreateBook() throws Exception {
+        String newBookJson = "{ \"name\": \"New Book\", \"author\": { \"name\": \"New Author\" }, \"genre\": \"New Genre\", \"description\": \"New Description\" }";
+
+        mockMvc.perform(post("/books")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(newBookJson))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.name").value("New Book"))
+                .andExpect(jsonPath("$.author.name").value("New Author"))
+                .andExpect(jsonPath("$.genre").value("New Genre"))
+                .andExpect(jsonPath("$.description").value("New Description"));
     }
 }
