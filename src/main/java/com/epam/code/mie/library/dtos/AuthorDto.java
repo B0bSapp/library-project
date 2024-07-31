@@ -1,7 +1,12 @@
 package com.epam.code.mie.library.dtos;
 
+import lombok.Data;
 import java.util.List;
 
-public record AuthorDto(String name, String lastName, String secondName, List<BookDto> books) {
-
+@Data
+public class AuthorDto {
+    private String name;
+    private String lastName;
+    private String secondName;
+    private List<BookDto> books;
 }
