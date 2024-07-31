@@ -25,13 +25,4 @@ public class BooksService {
     public Optional<Book> getBookByName(String name) {
         return booksRepository.findByName(name);
     }
-
-    public boolean addBook(BookDto bookDto) {
-        if (authorsRepository.existsById(bookDto.getAuthorId())) {
-            Book book = BooksMapper.toEntity(bookDto);
-            booksRepository.save(book);
-            return true;
-        }
-        return false;
-    }
 }
