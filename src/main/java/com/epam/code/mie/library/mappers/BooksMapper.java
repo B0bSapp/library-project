@@ -17,4 +17,10 @@ public class BooksMapper implements Mapper<BookDto, Book> {
         entity.getDescription());
   }
 
+  public Book toEntity(BookDto dto) {
+    return new Book(dto.getName(),
+        authorMapper.toEntity(dto.getAuthor()), dto.getGenre(),
+        dto.getDescription());
+  }
+
 }
