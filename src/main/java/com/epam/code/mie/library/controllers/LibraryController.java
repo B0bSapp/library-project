@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -33,7 +34,7 @@ public class LibraryController {
 
   @Operation(summary = "Add a new book")
   @PostMapping("/books")
-  public ResponseEntity<BookDto> addBook(@RequestBody BookDto bookDto) {
+  public ResponseEntity<BookDto> addBook(@RequestBody @Valid BookDto bookDto) {
     BookDto createdBook = booksFacade.addBook(bookDto);
     return ResponseEntity.ok(createdBook);
   }
