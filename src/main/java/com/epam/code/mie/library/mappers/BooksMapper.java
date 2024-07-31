@@ -9,11 +9,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class BooksMapper implements Mapper<BookDto, Book> {
 
-  private final AuthorMapper authorMapper;
-
   public BookDto toDto(Book entity) {
     return new BookDto(entity.getName(),
-        authorMapper.toDto(entity.getAuthor()), entity.getGenre(),
+        null, // Author will be assigned by the facade
+        entity.getGenre(),
         entity.getDescription());
   }
 
