@@ -3,6 +3,8 @@ package com.epam.code.mie.library.facades;
 import com.epam.code.mie.library.dtos.BookDto;
 import com.epam.code.mie.library.mappers.BooksMapper;
 import com.epam.code.mie.library.services.BooksService;
+import com.epam.code.mie.library.services.AuthorsService;
+import com.epam.code.mie.library.entities.Book;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +18,7 @@ public class BooksFacade {
 
     private final BooksService booksService;
     private final BooksMapper booksMapper;
+    private final AuthorsService authorsService;
 
     @Transactional(readOnly = true)
     public List<BookDto> getAllBooks() {
@@ -29,6 +32,12 @@ public class BooksFacade {
 
     @Transactional
     public BookDto addBook(BookDto bookDto) {
-        return booksMapper.toDto(booksService.addBook(booksMapper.toEntity(bookDto)));
+        Book bookEntity = booksMapper.toEntity(bookDto);
+        authorsService.findAuthorByNameAndLastNameAndSecondName(
+                bookDto.getAuthorName(), 
+                bookDto.getAuthorLastName(), 
+                bookDto.getAuthorSecondName()
+        ).ifPresent(bookEntity::setAuthor);
+        return booksMapper.toDto(booksService.addBook(bookEntity));
     }
 }
